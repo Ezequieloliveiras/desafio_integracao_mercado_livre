@@ -1,4 +1,5 @@
 const express = require('express')
+
 const dadosController = require("../controllers/dadosController.js")
 
 const router = express.Router()

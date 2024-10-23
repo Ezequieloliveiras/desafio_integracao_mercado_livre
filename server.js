@@ -1,5 +1,5 @@
 const express = require('express')
-const cors = require('cors'); // Importando o pacote cors
+const cors = require('cors')
 const dadosRoutes  = require('./src/routes/dadosRoutes')
 
 const app = express()
@@ -12,6 +12,6 @@ app.use('/api', dadosRoutes )
 
 
 app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`);
+    console.log(`Servidor rodando na porta ${port}`)
 })
 

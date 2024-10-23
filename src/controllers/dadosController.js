@@ -1,5 +1,6 @@
 const axios = require("axios")
 
+// controlador que executa a solicitação dos produtos ao meli
 const getProducts = async (req, res) => {
     const { termoPesquisado, precoMinimo, precoMaximo, condicao } = req.query
 
@@ -52,6 +53,6 @@ module.exports = {
     getProducts,
 }
 
-// Documentação que explica essa URL
+// Documentação utilizada como base para realizar o Search
 // https://developers.mercadolivre.com.br/pt_br/categorias-e-atributos-veiculos
 // https://developers.mercadolivre.com.br/pt_br/itens-e-buscas
