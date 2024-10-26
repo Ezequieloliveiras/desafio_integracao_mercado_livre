@@ -59,7 +59,7 @@ const fetchProductDetails = async (req, res) => {
             return res.status(404).send('Produto não encontrado.')
         }
 
-        res.json( response.data)
+        res.json(response.data)
 
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error)
@@ -69,21 +69,17 @@ const fetchProductDetails = async (req, res) => {
 
 const fetchProductDescription = async (req, res) => {
 
-    const { id } = req.params;
-    console.log('ID da descrição:', id);
+    const { id } = req.params
+    console.log('ID da descrição:', id)
 
     try {
-        const response = await axios.get(`https://api.mercadolibre.com/items/${id}/description`);
-        
-        if (!response.data.plain_text) {
-            return res.status(404).send('Descrição não encontrada para este produto.');
-        }
+        const response = await axios.get(`https://api.mercadolibre.com/items/${id}/description`)
 
-        res.json({ description: response.data.plain_text }); // Retorna apenas a descrição do produto
+        res.json({ description: response.data.plain_text }) // Retorna apenas a descrição do produto
 
     } catch (error) {
-        console.error('Erro ao buscar descrição da API:', error.message);
-        res.status(500).send("Erro ao buscar descrição da API");
+        console.error('Erro ao buscar descrição da API:', error.message)
+        res.status(500).send("Produto sem descrição.")
     }
 }
 
