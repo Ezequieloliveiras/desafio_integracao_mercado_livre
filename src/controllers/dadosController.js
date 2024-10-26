@@ -1,6 +1,5 @@
 const axios = require("axios")
 
-// controlador que executa a solicitação dos produtos ao meli
 const getProducts = async (req, res) => {
     const { termoPesquisado, precoMinimo, precoMaximo, condicao } = req.query
 
@@ -36,7 +35,7 @@ const getProducts = async (req, res) => {
                 condition: condicao,
             },
         })
-        if(response.data.results <= 0) {
+        if (response.data.results <= 0) {
             return res.status(400).send('Nenhum produto encontrado com esses critérios.')
         }
 
@@ -49,8 +48,49 @@ const getProducts = async (req, res) => {
     }
 }
 
+const fetchProductDetails = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const response = await axios.get(`https://api.mercadolibre.com/items/${id}`)
+        console.log(response)
+
+        if (!response.data.id) {
+            return res.status(404).send('Produto não encontrado.')
+        }
+
+        res.json( response.data)
+
+    } catch (error) {
+        console.error('Erro ao buscar dados da API:', error)
+        res.status(500).send("Erro ao buscar dados da API")
+    }
+}
+
+const fetchProductDescription = async (req, res) => {
+
+    const { id } = req.params;
+    console.log('ID da descrição:', id);
+
+    try {
+        const response = await axios.get(`https://api.mercadolibre.com/items/${id}/description`);
+        
+        if (!response.data.plain_text) {
+            return res.status(404).send('Descrição não encontrada para este produto.');
+        }
+
+        res.json({ description: response.data.plain_text }); // Retorna apenas a descrição do produto
+
+    } catch (error) {
+        console.error('Erro ao buscar descrição da API:', error.message);
+        res.status(500).send("Erro ao buscar descrição da API");
+    }
+}
+
 module.exports = {
     getProducts,
+    fetchProductDetails,
+    fetchProductDescription,
 }
 
 // Documentação utilizada como base para realizar o Search
